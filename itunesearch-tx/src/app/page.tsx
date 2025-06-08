@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { DropdownList } from "./components/Dropdown";
+import { SearchInput } from "./components/SearchInput";
 
 export default function Home() {
   return (
@@ -10,11 +11,7 @@ export default function Home() {
         </h1>
         
         <div className="flex items-center justify-center gap-4">
-          <input 
-            type="text"
-            placeholder="Search for music, artists, albums..."
-            className="w-full max-w-lg px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <SearchInput/>
          <DropdownList/>
           <button
             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
