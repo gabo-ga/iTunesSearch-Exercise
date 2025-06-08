@@ -14,8 +14,6 @@ export function DropdownList({ value, onChange }: MediaTypeSelectProps) {
       <option value="music">Music</option>
       <option value="movie">Movie</option>
       <option value="podcast">Podcast</option>
-      <option value="audiobook">Audiobook</option>
-      <option value="ebook">eBook</option>
     </select>
   );
 }
