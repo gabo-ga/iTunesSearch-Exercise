@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { DropdownList } from "./components/Dropdown";
 
 export default function Home() {
   return (
@@ -14,16 +15,7 @@ export default function Home() {
             placeholder="Search for music, artists, albums..."
             className="w-full max-w-lg px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <select
-            className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="all">All</option>
-            <option value="music">Music</option>
-            <option value="movie">Movie</option>
-            <option value="podcast">Podcast</option>
-            <option value="audiobook">Audiobook</option>
-            <option value="ebook">eBook</option>
-          </select>
+         <DropdownList/>
           <button
             className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
           >
