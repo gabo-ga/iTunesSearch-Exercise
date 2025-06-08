@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { DropdownList } from "./components/Dropdown";
 import { SearchInput } from "./components/SearchInput";
+import { MediaCard } from "./components/MediaCard";
 
 export default function Home() {
   return (
@@ -18,6 +19,8 @@ export default function Home() {
           >
             Search
           </button>
+
+          
         </div>
       </div>
     </main>
