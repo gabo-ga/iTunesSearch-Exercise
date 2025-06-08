@@ -11,7 +11,7 @@ export default function Home() {
           iTunes Search
         </h1>
         
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center jusntify-center gap-4">
           <SearchInput/>
          <DropdownList/>
           <button
