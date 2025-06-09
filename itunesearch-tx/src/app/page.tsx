@@ -1,28 +1,49 @@
-import Image from "next/image";
-import { DropdownList } from "./components/Dropdown";
-import { SearchInput } from "./components/SearchInput";
-import { MediaCard } from "./components/MediaCard";
+// src/pages/index.tsx
+import { useState } from 'react'
+import type { NextPage } from 'next'
 
-export default function Home() {
+import { SearchInput } from './components/SearchInput'
+import { DropdownList } from './components/Dropdown'
+import { MediaCard } from './components/MediaCard'
+import { useSearch } from './hooks/useSearch'
+
+
+const HomePage: NextPage = () => {
+  const [term, setTerm] = useState('')
+  const [media, setMedia] = useState('all')
+  const { results, isLoading, isError } = useSearch({ term, media })
+
   return (
-    <main className="min-h-screen p-8">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-center">
-          iTunes Search
-        </h1>
-        
-        <div className="flex items-center jusntify-center gap-4">
-          <SearchInput/>
-         <DropdownList/>
-          <button
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          >
-            Search
-          </button>
-
-          
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="flex flex-col sm:flex-row gap-4 mb-6 items-center">
+        <SearchInput
+          value={term}
+          onChange={setTerm}
+        />
+        <div className="w-full sm:w-48">
+          <DropdownList
+            value={media}
+            onChange={setMedia}
+          />
         </div>
       </div>
-    </main>
-  );
+
+      {/* Mensajes de estado */}
+      {isError && (
+        <p className="text-red-600 text-center mb-4">Error occurred during search.</p>
+      )}
+      {isLoading && (
+        <p className="text-gray-700 text-center mb-4">Loading…</p>
+      )}
+
+      {/* Grid de resultados */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {results.map(item => (
+          <MediaCard key={item.trackId ?? item.collectionId} item={item} />
+        ))}
+      </div>
+    </div>
+  )
 }
+
+export default HomePage
