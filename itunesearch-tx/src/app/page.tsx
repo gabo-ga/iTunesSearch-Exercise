@@ -1,17 +1,17 @@
-// src/pages/index.tsx
+"use client"
 import { useState } from 'react'
 import type { NextPage } from 'next'
 
 import { SearchInput } from './components/SearchInput'
 import { DropdownList } from './components/Dropdown'
 import { MediaCard } from './components/MediaCard'
-import { useSearch } from './hooks/useSearch'
+import { useSearch } from '../../hooks/useSearch'
 
 
 const HomePage: NextPage = () => {
   const [term, setTerm] = useState('')
   const [media, setMedia] = useState('all')
-  const { results, isLoading, isError } = useSearch({ term, media })
+  const { results, loading, isError } = useSearch({ term, media })
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -28,15 +28,13 @@ const HomePage: NextPage = () => {
         </div>
       </div>
 
-      {/* Mensajes de estado */}
       {isError && (
         <p className="text-red-600 text-center mb-4">Error occurred during search.</p>
       )}
-      {isLoading && (
+      {loading && (
         <p className="text-gray-700 text-center mb-4">Loading…</p>
       )}
 
-      {/* Grid de resultados */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {results.map(item => (
           <MediaCard key={item.trackId ?? item.collectionId} item={item} />
