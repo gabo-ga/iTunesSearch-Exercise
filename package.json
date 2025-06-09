@@ -4,6 +4,7 @@
     "jest": "^29.7.0"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^8.0.1",
     "@types/axios": "^0.9.36"
   }
 }
