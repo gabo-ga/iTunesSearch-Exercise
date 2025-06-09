@@ -7,7 +7,7 @@ export default async function handler(
     res: NextApiResponse<ApiResponse<MediaItem> | { error: string }>
 ) {
     if (req.method !== "GET") {
-        return res.status(405).json({ error: "Method Not Allowed" });
+        return res.status(405).json({ error: "Only GET allowed" });
     }
 
     const { term = '', media = 'all', limit = 25, offset = 0 } = req.query;
