@@ -1,45 +1,60 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import type { MediaItem, ApiResponse } from "../models/itunes";
+import type { MediaItem } from "../models/itunes";
+import type { ApiResponse, SearchParams } from "../models/itunes";
+import { searchItunes } from "../api/itunes";
 
 interface UseSearchParams {
-    term: string;
-    media?: string;
+  term: string;
+  media?: string;
 }
 
-export function useSearch({term, media}: UseSearchParams){
-    const [results, setResults] = useState<MediaItem[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
+export function useSearch({ term, media }: UseSearchParams) {
+  const [results, setResults] = useState<MediaItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-    useEffect(()=>{
-        if(!term.trim()){
-            setResults([]);
-            setIsError(false);
-            setLoading(false);
-            return;
+  useEffect(() => {
+    if (!term.trim()) {
+      setResults([]);
+      setIsError(false);
+      setLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    setLoading(true);
+    setIsError(false);
+
+    const params: SearchParams = {
+      term,
+      media: media || "all",
+      limit: 25,
+      offset: 0,
+    };
+
+    searchItunes(params)
+      .then((data: ApiResponse<MediaItem>) => {
+        if (!cancelled) {
+          setResults(data.results);
         }
-
-        let cancelled = false;
-        setLoading(true);
-        setIsError(false);
-
-        fetch(`/api/search?term=${encodeURIComponent(term)}&media=${media || 'all'}`)
-        .then(async (res) => {
-            if(!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const data = (await res.json()) as ApiResponse<MediaItem>;
-            if(!cancelled) setResults(data.results || []);
-    })
-    .catch(() => {
-        if(!cancelled) setIsError(true);
-    })
-    .finally(() => {
-        if(!cancelled) setLoading(false);
-    })
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setIsError(true);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
 
     return () => {
-        cancelled = true;
-    }
-}, [term, media]);
-return { results, loading, isError };
+      cancelled = true;
+    };
+  }, [term, media]);
+
+  return { results, loading, isError };
 }
