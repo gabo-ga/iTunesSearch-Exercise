@@ -1,4 +1,3 @@
-// src/components/MediaCard.tsx
 import Image from 'next/image'
 import type { FC } from 'react'
 import type { MediaItem } from '../../../models/itunes'
@@ -30,7 +29,6 @@ export const MediaCard: FC<MediaCardProps> = ({ item }) => {
           fill
           className="object-cover"
           onError={(e) => {
-            // En Next.js Image, e.currentTarget apunta al <img>
             e.currentTarget.src = defaultImage
           }}
         />
